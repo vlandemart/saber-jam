@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PersonalMovement : MonoBehaviour
 {
-    public CharacterController controller;
-
+    public Rigidbody rb;
+    public Animator Animator;
     public Transform cameraTransform;
     
     public float speed = 6f;
@@ -27,7 +27,15 @@ public class PersonalMovement : MonoBehaviour
         {
             Vector3 movementVector = forward * vertical + right * horizontal;
             movementVector.Normalize();
-            controller.Move(movementVector * speed * Time.deltaTime);
+            movementVector *= speed * Time.deltaTime;
+            Animator.SetFloat("velocity", movementVector.magnitude);
+
+            movementVector.y = rb.velocity.y;
+            rb.velocity = movementVector;
+        }
+        else
+        {
+            Animator.SetFloat("velocity", 0);
         }
     }
 }
