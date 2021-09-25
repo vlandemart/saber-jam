@@ -18,6 +18,8 @@ namespace Interactables
         {
             rb.isKinematic = true;
             taken = true;
+
+            gameObject.transform.rotation = Quaternion.identity;
         }
 
         public void Throw(Vector3 direction)

@@ -59,39 +59,48 @@ public class ObjectInteraction : MonoBehaviour
     void Update()
     {
         TrySetText("");
-        
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (!Physics.Raycast(ray, out hit, 999f, interactibleLayer))
+
+        Collider[] colliders =
+            Physics.OverlapSphere(gameObject.transform.position, maxDistanceToInteractible, interactibleLayer);
+        if (colliders.Length == 0)
         {
             return;
         }
 
-        GameObject obj = hit.collider.gameObject;
-        InteractiveObject otherInteractive = obj.GetComponent<InteractiveObject>();
-        if (otherInteractive == null)
+        float minDist = float.MaxValue;
+        InteractiveObject chosenObject = null;
+        foreach (Collider coll in colliders)
         {
-            return;
+            InteractiveObject interactive = coll.GetComponent<InteractiveObject>();
+            if (interactive == null)
+            {
+                continue;
+            }
+
+            float distance = Vector3.Distance(gameObject.transform.position, coll.transform.position);
+            if (distance < minDist)
+            {
+                chosenObject = interactive;
+            }
         }
-        
-        if (Vector3.Distance(gameObject.transform.position, hit.collider.transform.position) >
-            maxDistanceToInteractible)
+
+        if (chosenObject == null)
         {
             return;
         }
 
-        if (otherInteractive.IsCanInteract())
+        if (chosenObject.IsCanInteract())
         {
-            TrySetText(otherInteractive.interactionText);
+            TrySetText("Press 'E' to " + chosenObject.interactionText);
         }
         else
         {
-            TrySetText(otherInteractive.interactionText + "(unavailable)");
+            TrySetText(chosenObject.interactionText + " (unavailable)");
         }
 
-        if (Input.GetMouseButtonDown(0) && otherInteractive.canBeActivatedWithMouse)
+        if (Input.GetKeyDown(KeyCode.E) && chosenObject.canBeActivatedWithMouse)
         {
-            Interact(otherInteractive);
+            Interact(chosenObject);
         }
     }
 
