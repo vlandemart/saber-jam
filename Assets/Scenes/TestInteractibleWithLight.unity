@@ -921,8 +921,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc2ad79aaf948c99706fa70b53537e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultGameObject: {fileID: 344761120}
-  lightedGameObject: {fileID: 4625910034334360162}
+  defaultGameObject: {fileID: 4625910034334360162}
+  lightedGameObject: {fileID: 344761120}
   changePosition: 0
   changeRotation: 0
 --- !u!1 &1402892870
