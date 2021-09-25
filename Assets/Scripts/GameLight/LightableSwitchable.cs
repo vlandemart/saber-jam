@@ -1,30 +1,42 @@
+using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LightableSwitchable : MonoBehaviour, IGameLightConeTarget
 {
-    [SerializeField] private GameObject objectToSwitchTo;
+    [SerializeField] private GameObject defaultGameObject;
+
+    [SerializeField] [FormerlySerializedAs("objectToSwitchTo")]
+    private GameObject lightedGameObject;
+
     [SerializeField] private bool changePosition = true;
     [SerializeField] private bool changeRotation = true;
 
+    private void Start()
+    {
+        defaultGameObject.SetActive(true);
+        lightedGameObject.SetActive(false);
+    }
+
     public void OnHighlightStart()
     {
-        gameObject.SetActive(false);
-        objectToSwitchTo.gameObject.SetActive(true);
+        defaultGameObject.SetActive(false);
+        lightedGameObject.SetActive(true);
 
         if (changePosition)
-            objectToSwitchTo.transform.position = transform.position;
+            lightedGameObject.transform.position = transform.position;
         if (changeRotation)
-            objectToSwitchTo.transform.rotation = transform.rotation;
+            lightedGameObject.transform.rotation = transform.rotation;
     }
 
     public void OnHighlightEnd()
     {
-        gameObject.SetActive(true);
-        objectToSwitchTo.gameObject.SetActive(false);
+        defaultGameObject.SetActive(true);
+        lightedGameObject.SetActive(false);
 
         if (changePosition)
-            transform.position = objectToSwitchTo.transform.position;
+            transform.position = lightedGameObject.transform.position;
         if (changeRotation)
-            transform.rotation = objectToSwitchTo.transform.rotation;
+            transform.rotation = lightedGameObject.transform.rotation;
     }
 }
