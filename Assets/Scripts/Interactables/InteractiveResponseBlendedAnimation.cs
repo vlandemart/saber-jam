@@ -26,9 +26,4 @@ public class InteractiveResponseBlendedAnimation : InteractiveResponse
     {
         currIncrement = -1;
     }
-
-    public override bool IsAvailable()
-    {
-        return true;
-    }
 }
