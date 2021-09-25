@@ -4,9 +4,6 @@ public class PersonalMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public Animator Animator;
-    public Transform cameraTransform;
-
-    public bool kek = false;
     
     public float speed = 6f;
 
