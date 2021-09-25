@@ -10,7 +10,6 @@ public class ObjectThrower : MonoBehaviour
     private Text uiThrowableTextBox;
 
     private InteractibleObjectsProvider _provider;
-    private bool isAiming;
 
     private ThrowableObject _currentThrowable;
 
@@ -37,7 +36,7 @@ public class ObjectThrower : MonoBehaviour
         ThrowableObject obj = _provider.closestThrowable;
         if (obj != null && _currentThrowable == null)
         {
-            TrySetText(obj.throwableText);
+            TrySetText("Press E to pickup " + obj.throwableText);
             
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -46,38 +45,52 @@ public class ObjectThrower : MonoBehaviour
         }
         else
         {
-            if (_currentThrowable != null && isAiming)
+            if (_currentThrowable != null)
             {
-                targetPositionMarker.transform.position = InputManager.Instance.GetCursorPosition();                
+                TrySetText("Press E to throw");
+                DrawAim();
+                
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    ThrowObject();
+                }
             }
         }
     }
 
-    private void Start()
+    private void DrawAim()
     {
-        InputManager.Instance.OnRightMouseButtonDown.AddListener(StartAiming);
-        InputManager.Instance.OnRightMouseButtonUp.AddListener(StopAiming);
-        InputManager.Instance.OnLeftMouseButtonDown.AddListener(ThrowObject);
-    }
+        Vector3 markerPos = InputManager.Instance.GetCursorPosition();
+        Vector3 dir = markerPos - gameObject.transform.position;
+        float dist = dir.magnitude;
 
+        if (dist > _provider.maxDistanceToInteractible)
+        {
+            dir = dir.normalized * _provider.maxDistanceToInteractible;
+            markerPos = gameObject.transform.position + dir;
+        }
+        
+        targetPositionMarker.transform.position = markerPos;
+
+    }
+    
     private void TrySetObjectAsCurrent(ThrowableObject obj)
     {
         if (obj.taken)
             return;
         
-        obj.Take();
+        obj.Take(gameObject.GetComponent<Collider>());
         _currentThrowable = obj;
         
         _currentThrowable.transform.parent = throwableObjectAttachTransform;
         _currentThrowable.transform.localPosition = Vector3.zero;
+        
+        targetPositionMarker.SetActive(true);
     }
 
     //Called on LMB event
     private void ThrowObject()
     {
-        if (!isAiming)
-            return;
-
         if (_currentThrowable == null)
             return;
         
@@ -87,22 +100,10 @@ public class ObjectThrower : MonoBehaviour
         _currentThrowable.transform.LookAt(InputManager.Instance.GetCursorPosition());
         _currentThrowable.GetComponent<Rigidbody>().velocity = (throwPos - startPos).normalized * throwForce;
         
-        _currentThrowable.Throw();
+        _currentThrowable.Throw(gameObject.GetComponent<Collider>());
         _currentThrowable.gameObject.transform.parent = null;
         _currentThrowable = null;
-    }
-
-    //Called on RMB event
-    private void StartAiming()
-    {
-        isAiming = true;
-        targetPositionMarker.SetActive(true);
-    }
-
-    //Called on RMB event
-    private void StopAiming()
-    {
-        isAiming = false;
+        
         targetPositionMarker.SetActive(false);
     }
     

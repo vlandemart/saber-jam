@@ -16,6 +16,6 @@ public class InteractiveResponse : MonoBehaviour
 
     public virtual bool IsAvailable()
     {
-        return false;
+        return gameObject.activeInHierarchy;
     }
 }
