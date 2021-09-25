@@ -69,7 +69,7 @@ MonoBehaviour:
   - {fileID: 1344075316}
   interactionText: Interact
   isAvailableByDefault: 1
-  canBeActivatedWithMouse: 0
+  canBeActivatedWithMouse: 1
   isOneTimeInteraction: 0
 --- !u!65 &7428958837978384895
 BoxCollider:
