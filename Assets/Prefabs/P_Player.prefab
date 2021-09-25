@@ -111,6 +111,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2734870136715668468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141834783109355812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2f12f74b68f6a44f87a76d8fab97557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationStepDegrees: 30
+  offsetDegrees: 45
 --- !u!1 &6979787022647502113
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,20 +199,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 6979787024216744261}
---- !u!114 &2734870136715668468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5141834783109355812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f12f74b68f6a44f87a76d8fab97557, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationStepDegrees: 30
-  offsetDegrees: 45
 --- !u!1 &6979787023642458076
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,9 +463,57 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6979787023642458075}
     m_Modifications:
+    - target: {fileID: 626863868551656910, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 7aa9a9db709103c48babda4f7dc1e483, type: 3}
+    - target: {fileID: 652272139532198116, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 1988775848996065283, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
       propertyPath: m_Name
       value: Hud
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972174138331305167, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972174138331305167, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972174138331305167, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2972174138331305167, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 7aa9a9db709103c48babda4f7dc1e483, type: 3}
+    - target: {fileID: 2972174138331305167, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 6926618046583980449, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
       propertyPath: m_Pivot.x
@@ -550,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 6926618046583980449, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8948108535175566716, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 557414ec7e28641438b9a8c0b541d337, type: 3}
