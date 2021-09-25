@@ -1,37 +1,30 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Interactables
+public class ThrowableObject : MonoBehaviour
 {
-    public class ThrowableObject : InteractiveObject, IThrowable
+    public string throwableText = "trhow me";
+    [NonSerialized] public Rigidbody rb;
+
+    public bool taken;
+
+    private void Awake()
     {
-        [NonSerialized] public Rigidbody rb;
+        rb = GetComponent<Rigidbody>();
+    }
 
-        public bool taken;
+    public void Take()
+    {
+        rb.isKinematic = true;
+        taken = true;
 
-        private void Awake()
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+        gameObject.transform.rotation = Quaternion.identity;
+    }
 
-        public void Take()
-        {
-            rb.isKinematic = true;
-            taken = true;
-
-            gameObject.transform.rotation = Quaternion.identity;
-        }
-
-        public void Throw(Vector3 direction)
-        {
-            rb.isKinematic = false;
-            rb.velocity = direction * 20;
-            taken = false;
-        }
-
-        public override bool IsCanInteract()
-        {
-            return !taken;
-        }
+    public void Throw()
+    {
+        rb.isKinematic = false;
+        taken = false;
     }
 }
