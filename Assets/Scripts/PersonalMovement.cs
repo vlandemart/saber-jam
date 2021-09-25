@@ -4,12 +4,11 @@ public class PersonalMovement : MonoBehaviour
 {
     public Rigidbody rb;
     public Animator Animator;
-    public Transform cameraTransform;
     
     public float speed = 6f;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -27,11 +26,11 @@ public class PersonalMovement : MonoBehaviour
         {
             Vector3 movementVector = forward * vertical + right * horizontal;
             movementVector.Normalize();
-            movementVector *= speed * Time.deltaTime;
-            Animator.SetFloat("velocity", movementVector.magnitude);
-
+            movementVector *= speed * Time.fixedDeltaTime;
             movementVector.y = rb.velocity.y;
             rb.velocity = movementVector;
+            
+            Animator.SetFloat("velocity", movementVector.magnitude);
         }
         else
         {
