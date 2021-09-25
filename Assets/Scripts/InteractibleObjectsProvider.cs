@@ -31,6 +31,9 @@ public class InteractibleObjectsProvider : MonoBehaviour
             {
                 continue;
             }
+            
+            if (!IsObjectRaycastable(coll.gameObject))
+                continue;
 
             float distance = Vector3.Distance(gameObject.transform.position, coll.transform.position);
             if (distance < minDist)
@@ -40,5 +43,19 @@ public class InteractibleObjectsProvider : MonoBehaviour
         }
 
         return chosenObject;
+    }
+
+    private bool IsObjectRaycastable(GameObject objectToCheck)
+    {
+        Debug.DrawLine(transform.position, objectToCheck.transform.position, Color.blue);
+
+        var origin = transform.position;
+        var direction = objectToCheck.transform.position - transform.position;
+        if (!Physics.Raycast(origin, direction, out var hit))
+            return false;
+        if (hit.transform.gameObject != objectToCheck)
+            return false;
+
+        return true;
     }
 }
