@@ -1,6 +1,5 @@
 using Sigtrap.Relays;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 //All in-game controls should be stored here
 public class InputManager : MonoBehaviour
@@ -21,7 +20,7 @@ public class InputManager : MonoBehaviour
         if (cachedCursorPosition != Vector3.zero)
             return cachedCursorPosition;
 
-        var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (!Physics.Raycast(ray, out var hit))
             return lastValidCursorPosition;
 
@@ -63,17 +62,17 @@ public class InputManager : MonoBehaviour
     
     private void TakeInputLeftMouseButton()
     {
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Input.GetMouseButtonUp(0))
             OnLeftMouseButtonUp?.Dispatch();
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Input.GetMouseButtonDown(0))
             OnLeftMouseButtonDown?.Dispatch();
     }
 
     private void TakeInputRightMouseButton()
     {
-        if (Mouse.current.rightButton.wasReleasedThisFrame)
-            OnRightMouseButtonUp?.Dispatch();
-        if (Mouse.current.rightButton.wasPressedThisFrame)
+        if (Input.GetMouseButtonUp(1))
+            OnRightMouseButtonUp?.Dispatch();        
+        if (Input.GetMouseButtonDown(1))
             OnRightMouseButtonDown?.Dispatch();
     }
 }
