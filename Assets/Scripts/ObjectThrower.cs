@@ -1,24 +1,56 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectThrower : MonoBehaviour
 {
-    [SerializeField] private float throwAngle;
+    [SerializeField] private float throwForce = 10;
     [SerializeField] private GameObject targetPositionMarker;
+    [SerializeField] private Transform throwableObjectAttachTransform;
+    private Text uiThrowableTextBox;
 
-    private ThrowableObjectGetter throwableObjectGetter;
+    private InteractibleObjectsProvider _provider;
     private bool isAiming;
 
+    private ThrowableObject _currentThrowable;
+
+    public bool IsHoldingObject()
+    {
+        return _currentThrowable != null;
+    }
+    
     private void Awake()
     {
-        throwableObjectGetter = GetComponent<ThrowableObjectGetter>();
+        _provider = gameObject.GetComponent<InteractibleObjectsProvider>();
+        
+        var textObject = GameObject.FindWithTag("throwableTextBox");
+        if (textObject != null)
+        {
+            uiThrowableTextBox = textObject.GetComponent<Text>();
+        }
     }
 
     private void Update()
     {
-        if (!isAiming)
-            return;
-        targetPositionMarker.transform.position = InputManager.Instance.GetCursorPosition();
+        TrySetText("");
+        
+        ThrowableObject obj = _provider.closestThrowable;
+        if (obj != null && _currentThrowable == null)
+        {
+            TrySetText(obj.throwableText);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TrySetObjectAsCurrent(obj);
+            }
+        }
+        else
+        {
+            if (_currentThrowable != null && isAiming)
+            {
+                targetPositionMarker.transform.position = InputManager.Instance.GetCursorPosition();                
+            }
+        }
     }
 
     private void Start()
@@ -28,22 +60,36 @@ public class ObjectThrower : MonoBehaviour
         InputManager.Instance.OnLeftMouseButtonDown.AddListener(ThrowObject);
     }
 
+    private void TrySetObjectAsCurrent(ThrowableObject obj)
+    {
+        if (obj.taken)
+            return;
+        
+        obj.Take();
+        _currentThrowable = obj;
+        
+        _currentThrowable.transform.parent = throwableObjectAttachTransform;
+        _currentThrowable.transform.localPosition = Vector3.zero;
+    }
+
     //Called on LMB event
     private void ThrowObject()
     {
         if (!isAiming)
             return;
 
-        var objectToThrow = throwableObjectGetter.GetThrowableObject();
-        if (objectToThrow == null)
+        if (_currentThrowable == null)
             return;
         
         var startPos = transform.position;
         var throwPos = InputManager.Instance.GetCursorPosition();
-        var calculatedVelocity = ExtraGameMath.CalculateParabolicTrajectory(startPos, throwPos, throwAngle);
         
-        objectToThrow.transform.LookAt(InputManager.Instance.GetCursorPosition());
-        objectToThrow.velocity = objectToThrow.transform.TransformDirection(calculatedVelocity);
+        _currentThrowable.transform.LookAt(InputManager.Instance.GetCursorPosition());
+        _currentThrowable.GetComponent<Rigidbody>().velocity = (throwPos - startPos).normalized * throwForce;
+        
+        _currentThrowable.Throw();
+        _currentThrowable.gameObject.transform.parent = null;
+        _currentThrowable = null;
     }
 
     //Called on RMB event
@@ -58,5 +104,14 @@ public class ObjectThrower : MonoBehaviour
     {
         isAiming = false;
         targetPositionMarker.SetActive(false);
+    }
+    
+    void TrySetText(string value)
+    {
+        if (uiThrowableTextBox != null)
+        {
+            uiThrowableTextBox.text = value;
+            uiThrowableTextBox.enabled = value != "";
+        }
     }
 }
