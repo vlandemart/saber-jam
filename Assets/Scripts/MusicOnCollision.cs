@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MusicOnCollision : MonoBehaviour
 {
@@ -16,6 +18,19 @@ public class MusicOnCollision : MonoBehaviour
         if (GetComponent<Rigidbody>().velocity.magnitude < minVelocity)
             return;
 
+        PlaySound();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isOnlyOnce && hasPlayed)
+            return;
+        
+        PlaySound();
+    }
+
+    private void PlaySound()
+    {
         hasPlayed = true;
         soundToPlay.pitch = Random.Range(.9f, 1.1f);
         soundToPlay.Play();
