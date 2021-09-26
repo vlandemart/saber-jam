@@ -86,6 +86,11 @@ public class AiMovement : MonoBehaviour
         // Animator.SetFloat("xAxis", animDir.x);
         // Animator.SetFloat("yAxis", animDir.z);
         Animator.SetFloat("velocity", movementVector.magnitude);
+
+        if (this.IsStunned())
+        {
+            Animator.SetFloat("velocity", 0);
+        }
     }
 
     private List<GameObject> GetAvailableInteractiveObject()

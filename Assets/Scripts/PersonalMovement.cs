@@ -13,6 +13,7 @@ public class PersonalMovement : MonoBehaviour
     {
         if (this.IsStunned())
         {
+            Animator.SetFloat("velocity", 0);
             return;
         }
 
