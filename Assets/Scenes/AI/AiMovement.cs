@@ -22,8 +22,8 @@ public class AiMovement : MonoBehaviour
     public Vector3 GetInteractiveObjectPosition()
     {
         List<GameObjectWithDist> availableInteractiveObject = GetAvailableInteractiveObject();
-        availableInteractiveObject.Sort((p1,p2)=>p1.dist.CompareTo(p2.dist));
-        
+        availableInteractiveObject.Sort((p1, p2) => p1.dist.CompareTo(p2.dist));
+
         return availableInteractiveObject[0].GameObject.transform.position;
     }
 
@@ -106,7 +106,7 @@ public class AiMovement : MonoBehaviour
         foreach (var interactiveObject in interactiveObjects)
         {
             ThrowableObject throwableObject = interactiveObject.GetComponent<ThrowableObject>();
-            if (throwableObject != null && !throwableObject.taken)
+            if (throwableObject != null && !throwableObject.taken && throwableObject.rb.velocity.magnitude < 0.5)
             {
                 NavMeshPath path = new NavMeshPath();
 
@@ -114,7 +114,7 @@ public class AiMovement : MonoBehaviour
                     path))
                 {
                     float pathLength = GetPathLength(path);
-                    
+
                     GameObjectWithDist gameObjectWithDist = new GameObjectWithDist();
                     gameObjectWithDist.dist = pathLength;
                     gameObjectWithDist.GameObject = interactiveObject;
