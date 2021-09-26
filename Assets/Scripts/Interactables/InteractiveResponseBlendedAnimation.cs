@@ -28,11 +28,13 @@ public class InteractiveResponseBlendedAnimation : InteractiveResponse
 
     public override void DoResponseAction()
     {
+        base.DoResponseAction();
         currIncrement = doLogicValue;
     }
 
     public override void UndoResponseAction()
     {
+        base.UndoResponseAction();
         currIncrement = undoLogicValue;
     }
 }   

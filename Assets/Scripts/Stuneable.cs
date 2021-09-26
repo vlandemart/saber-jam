@@ -8,6 +8,7 @@ public class Stuneable : MonoBehaviour
     [SerializeField] private bool stunFromEditor;
 
     [SerializeField] private GameObject stubEffectGo;
+    [SerializeField] private AudioSource stunSound;
 
     float stunEndTime;
 
@@ -18,11 +19,16 @@ public class Stuneable : MonoBehaviour
 
     public void Stun()
     {
-        if (!IsStunned())
-        {
-            stunEndTime = Time.time + stunTime;
-            GetComponent<ObjectThrower>()?.ThrowObject();
-        }
+        if (IsStunned())
+            return;
+        
+        stunEndTime = Time.time + stunTime;
+        GetComponent<ObjectThrower>()?.ThrowObject();
+        
+        if (stunSound == null)
+            return;
+        stunSound.pitch = Random.Range(0.9f, 1.1f);
+        stunSound.Play();
     }
 
     private void Update()

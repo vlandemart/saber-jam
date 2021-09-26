@@ -10,18 +10,24 @@ public class InteractiveResponseSwitchGo : InteractiveResponse
 
     private void Start()
     {
+        if (defaultGo == null || switchedGo == null)
+            return;
         defaultGo.SetActive(true);
         switchedGo.SetActive(false);
     }
 
     public override void DoResponseAction()
     {
+        base.DoResponseAction();
+        if (defaultGo == null || switchedGo == null)
+            return;
         defaultGo.SetActive(false);
         switchedGo.SetActive(true);
     }
 
     public override void UndoResponseAction()
     {
+        base.UndoResponseAction();
         Debug.Assert(false);
     }
 }

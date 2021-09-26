@@ -18,12 +18,13 @@ public class InteractiveResponseAnimation : InteractiveResponse
 
     public override void DoResponseAction()
     {
+        base.DoResponseAction();
         _animator.Play(doAnimationName);
-        Debug.Log("Played animation");
     }
 
     public override void UndoResponseAction()
     {
+        base.UndoResponseAction();
         _animator.Play(undoAnimationName);
     }
 

@@ -17,6 +17,7 @@ public class SocketForThrowable : MonoBehaviour
     private bool done = false;
 
     public GameObject VFX;
+    [SerializeField] private AudioSource sparkSound;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -72,6 +73,7 @@ public class SocketForThrowable : MonoBehaviour
 
             Debug.Log("Do interaction with " + gameObject.name);
             Instantiate(VFX, transform.position, Quaternion.identity);
+            sparkSound.Play();
         }
 
         timeCur += Time.deltaTime;
