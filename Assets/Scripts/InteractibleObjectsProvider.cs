@@ -53,11 +53,17 @@ public class InteractibleObjectsProvider : MonoBehaviour
         var origin = transform.position;
         var direction = objectToCheck.transform.position - transform.position;
         Ray ray = new Ray(origin, direction);
-        if (!Physics.Raycast(ray, out var hit, direction.magnitude, ~gameObject.layer))
-            return false;
-        if (hit.transform.gameObject != objectToCheck)
-            return false;
 
-        return true;
+        var oldLayer = gameObject.layer;
+        gameObject.layer = Physics.IgnoreRaycastLayer;
+
+        if (!Physics.Raycast(ray, out var hit, direction.magnitude))
+        {
+            return false;
+        }
+
+        gameObject.layer = oldLayer;
+
+        return hit.transform.gameObject == objectToCheck;
     }
 }
