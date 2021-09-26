@@ -125,6 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationStepDegrees: 30
   offsetDegrees: 45
+  rotateDegreesInStun: 30
+  stuneable: {fileID: 6921728558856077356}
 --- !u!1 &6979787022647502113
 GameObject:
   m_ObjectHideFlags: 0
