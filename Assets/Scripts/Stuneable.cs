@@ -21,6 +21,7 @@ public class Stuneable : MonoBehaviour
         if (!IsStunned())
         {
             stunEndTime = Time.time + stunTime;
+            GetComponent<ObjectThrower>()?.ThrowObject();
         }
     }
 

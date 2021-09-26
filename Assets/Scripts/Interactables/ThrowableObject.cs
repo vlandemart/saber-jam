@@ -12,8 +12,9 @@ public class ThrowableObject : MonoBehaviour
     public bool inSocket;
     private Collider coll;
 
+    [SerializeField] private float stunTime = 1.0f;
 
-    [SerializeField] private float stunSpeedThreshold = 0.3f;
+    private float stunEnabledAppTime;
 
     private void Awake()
     {
@@ -34,11 +35,12 @@ public class ThrowableObject : MonoBehaviour
     {
         rb.isKinematic = false;
         taken = false;
+        stunEnabledAppTime = Time.time + stunTime;
 
-        StartCoroutine(EnableCollision(carrier));
+        StartCoroutine(EnableCollisionWithCarrier(carrier));
     }
 
-    private IEnumerator EnableCollision(Collider carrier)
+    private IEnumerator EnableCollisionWithCarrier(Collider carrier)
     {
         yield return new WaitForSeconds(0.5f);
         Physics.IgnoreCollision(carrier, coll, false);
@@ -46,19 +48,15 @@ public class ThrowableObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        var stuneable = other.gameObject.GetComponent<Stuneable>();
-        if (stuneable == null)
+        if (Time.time > stunEnabledAppTime)
         {
             return;
         }
 
-        if (rb.velocity.magnitude > stunSpeedThreshold)
+        var stuneable = other.gameObject.GetComponent<Stuneable>();
+        if (stuneable != null)
         {
             stuneable.Stun();
-        }
-        else
-        {
-            Debug.Log("too little speed for stun" + rb.velocity.magnitude);
         }
     }
 }

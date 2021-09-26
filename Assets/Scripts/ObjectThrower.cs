@@ -94,7 +94,7 @@ public class ObjectThrower : MonoBehaviour
     }
 
     //Called on LMB event
-    private void ThrowObject()
+    public void ThrowObject()
     {
         if (_currentThrowable == null)
             return;

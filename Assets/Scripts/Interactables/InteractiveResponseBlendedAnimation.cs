@@ -6,10 +6,19 @@ public class InteractiveResponseBlendedAnimation : InteractiveResponse
     public float animationSpeed = 1f;
     public string blendingParam = "blendParam";
     public Animator _animator;
-    
-    private float blendParam = .0f;
 
-    private int currIncrement = -1;
+    [Header("1 means open, -1 close. You can invert them for inversed logic")]
+    [SerializeField] private int startLogicValue = -1;
+    [SerializeField] private int doLogicValue = 1;
+    [SerializeField] private int undoLogicValue = -1;
+    
+    private float blendParam;
+    private int currIncrement;
+
+    private void Start()
+    {
+        currIncrement = startLogicValue;
+    }
 
     private void Update()
     {
@@ -19,11 +28,11 @@ public class InteractiveResponseBlendedAnimation : InteractiveResponse
 
     public override void DoResponseAction()
     {
-        currIncrement = 1;
+        currIncrement = doLogicValue;
     }
 
     public override void UndoResponseAction()
     {
-        currIncrement = -1;
+        currIncrement = undoLogicValue;
     }
-}
+}   

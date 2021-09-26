@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 6921728558856077356}
   m_Layer: 0
   m_Name: P_Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -422,6 +422,10 @@ PrefabInstance:
     - target: {fileID: 4377953926933541308, guid: cf978c77622b3ec1cb945868881bd098, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4377953926933541308, guid: cf978c77622b3ec1cb945868881bd098, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4377953926933544514, guid: cf978c77622b3ec1cb945868881bd098, type: 3}
       propertyPath: m_RootOrder

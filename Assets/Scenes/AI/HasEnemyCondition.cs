@@ -6,7 +6,7 @@ namespace BehaviorDesigner.Runtime.Tasks.Unity.UnityNavMeshAgent
     public class HasEnemyCondition : Conditional
     {
         public SharedGameObject Enemy;
-        
+
         public override void OnStart()
         {
         }

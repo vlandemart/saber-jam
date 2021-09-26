@@ -642,7 +642,7 @@ GameObject:
   - component: {fileID: 4509912125192278222}
   m_Layer: 0
   m_Name: P_ThrowableKUBIK
-  m_TagString: Untagged
+  m_TagString: InteractiveObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -759,8 +759,8 @@ MonoBehaviour:
   throwableText: trhow me
   taken: 0
   inSocket: 0
-  stunSpeedThreshold: 0.3
---- !u!1 &6940374942561305483
+  stunTime: 1
+--- !u!1 &5474519878280510571
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
