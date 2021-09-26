@@ -33,6 +33,11 @@ public class ObjectThrower : MonoBehaviour
     {
         TrySetText("");
 
+        if (this.IsStunned())
+        {
+            return;
+        }
+
         ThrowableObject obj = _provider.closestThrowable;
         if (obj != null && _currentThrowable == null && !obj.inSocket)
         {
