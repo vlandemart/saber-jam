@@ -10,11 +10,12 @@ public class InteractibleObjectsProvider : MonoBehaviour
 
     [NonSerialized] public InteractiveObject closestInteractive;
     [NonSerialized] public ThrowableObject closestThrowable;
-    
+
     void Update()
     {
         Collider[] colliders =
-            Physics.OverlapSphere(gameObject.transform.position + new Vector3(0, maxDistanceToInteractible / 2, 0), maxDistanceToInteractible, interactibleLayer);
+            Physics.OverlapSphere(gameObject.transform.position + new Vector3(0, maxDistanceToInteractible / 2, 0),
+                maxDistanceToInteractible, interactibleLayer);
 
         closestInteractive = GetClosestObject<InteractiveObject>(colliders);
         closestThrowable = GetClosestObject<ThrowableObject>(colliders);
@@ -31,7 +32,7 @@ public class InteractibleObjectsProvider : MonoBehaviour
             {
                 continue;
             }
-            
+
             if (!IsObjectRaycastable(coll.gameObject))
                 continue;
 
@@ -51,7 +52,8 @@ public class InteractibleObjectsProvider : MonoBehaviour
 
         var origin = transform.position;
         var direction = objectToCheck.transform.position - transform.position;
-        if (!Physics.Raycast(origin, direction, out var hit))
+        Ray ray = new Ray(origin, direction);
+        if (!Physics.Raycast(ray, out var hit, direction.magnitude, ~gameObject.layer))
             return false;
         if (hit.transform.gameObject != objectToCheck)
             return false;

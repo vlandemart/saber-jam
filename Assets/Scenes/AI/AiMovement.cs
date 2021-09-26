@@ -27,7 +27,7 @@ public class AiMovement : MonoBehaviour
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.updateRotation = false;
+        //_navMeshAgent.updateRotation = false;
 
         interactiveObjects = GameObject.FindGameObjectsWithTag(interactiveObjectTag);
         //NavMesh.SamplePosition
