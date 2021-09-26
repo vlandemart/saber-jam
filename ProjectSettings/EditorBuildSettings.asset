@@ -10,10 +10,16 @@ EditorBuildSettings:
     guid: 00922eca6095a2d4a9f93b4d72e20114
   - enabled: 1
     path: Assets/Scenes/FINAL_LEVELS/LEVEL2.unity
-    guid: b44cc002373bd7a4d9fb0db1ec8dc8f2
+    guid: 5394834e32d4ba741abfed1fea6e014b
   - enabled: 1
     path: Assets/Scenes/FINAL_LEVELS/LEVEL3.unity
     guid: bb76e18088f231545b97d0b063a92e31
+  - enabled: 1
+    path: Assets/Scenes/FINAL_LEVELS/LEVEL4.unity
+    guid: 775c44a92398da248b52932e8729c7e3
+  - enabled: 1
+    path: Assets/Scenes/FINAL_LEVELS/LEVEL_FINAL.unity
+    guid: b44cc002373bd7a4d9fb0db1ec8dc8f2
   - enabled: 1
     path: Assets/Scenes/FINAL_LEVELS/LEVEL_3_test.unity
     guid: c4c131f66fb0e3c4da4f5f787c46ad2c
