@@ -12,6 +12,9 @@ public class ThrowableObject : MonoBehaviour
     public bool inSocket;
     private Collider coll;
 
+
+    [SerializeField] private float stunSpeedThreshold = 0.3f;
+
     private void Awake()
     {
         coll = GetComponent<Collider>();
@@ -39,5 +42,23 @@ public class ThrowableObject : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Physics.IgnoreCollision(carrier, coll, false);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        var stuneable = other.gameObject.GetComponent<Stuneable>();
+        if (stuneable == null)
+        {
+            return;
+        }
+
+        if (rb.velocity.magnitude > stunSpeedThreshold)
+        {
+            stuneable.Stun();
+        }
+        else
+        {
+            Debug.Log("too little speed for stun" + rb.velocity.magnitude);
+        }
     }
 }

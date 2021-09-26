@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using BehaviorDesigner.Runtime;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,7 +28,7 @@ public class AiMovement : MonoBehaviour
     void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
-        _navMeshAgent.updateRotation = false;
+        //_navMeshAgent.updateRotation = false;
 
         interactiveObjects = GameObject.FindGameObjectsWithTag(interactiveObjectTag);
         //NavMesh.SamplePosition
@@ -54,6 +55,19 @@ public class AiMovement : MonoBehaviour
 
     void Update()
     {
+        if (this.IsStunned())
+        {
+            _navMeshAgent.isStopped = true;
+            _navMeshAgent.velocity = Vector3.zero;
+            GetComponent<BehaviorTree>().DisableBehavior();
+            // _navMeshAgent.enabled = !this.IsStunned();
+        }
+        else
+        {
+            _navMeshAgent.isStopped = false;
+            GetComponent<BehaviorTree>().EnableBehavior();
+        }
+
         Vector3 point;
         if (RandomPoint(transform.position, range, out point))
         {
