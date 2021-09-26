@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class InteractiveObject : MonoBehaviour
 {
-    [SerializeField]
-    private List<InteractiveResponse> objectsToInteract = new List<InteractiveResponse>();
+    public bool needUiText = true;
+
+    [SerializeField] private List<InteractiveResponse> objectsToInteract = new List<InteractiveResponse>();
 
     public string interactionText = "Interact";
     public bool isAvailableByDefault = true;
@@ -21,7 +22,7 @@ public class InteractiveObject : MonoBehaviour
     {
         isAvailable = isAvailableByDefault;
         lastActionIsDo = !isAvailable;
-        
+
         if (objectsToInteract.Count == 0)
             Debug.LogWarning(gameObject.name + " has 0 interactable objects! Set them in the editor.");
     }
@@ -33,9 +34,10 @@ public class InteractiveObject : MonoBehaviour
             if (!obj.IsAvailable())
                 return false;
         }
+
         return isAvailable;
     }
-    
+
     public void TryDoInteract()
     {
         SwitchInteraction();
@@ -88,7 +90,7 @@ public class InteractiveObject : MonoBehaviour
     {
         isAvailable = false;
     }
-    
+
     private void OnDrawGizmos()
     {
         foreach (var interactable in objectsToInteract)
@@ -96,5 +98,4 @@ public class InteractiveObject : MonoBehaviour
             Debug.DrawLine(transform.position, interactable.transform.position);
         }
     }
-    
 }
