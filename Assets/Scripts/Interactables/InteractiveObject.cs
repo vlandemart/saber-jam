@@ -88,4 +88,13 @@ public class InteractiveObject : MonoBehaviour
     {
         isAvailable = false;
     }
+    
+    private void OnDrawGizmos()
+    {
+        foreach (var interactable in objectsToInteract)
+        {
+            Debug.DrawLine(transform.position, interactable.transform.position);
+        }
+    }
+    
 }
