@@ -6,6 +6,7 @@ TagManager:
   tags:
   - interactableTextBox
   - throwableTextBox
+  - InteractiveObject
   layers:
   - Default
   - TransparentFX
