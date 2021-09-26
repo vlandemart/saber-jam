@@ -15,14 +15,16 @@ public class AiMovement : MonoBehaviour
 
     public bool HasInteractiveObject()
     {
-        List<GameObject> availableInteractiveObject = GetAvailableInteractiveObject();
+        List<GameObjectWithDist> availableInteractiveObject = GetAvailableInteractiveObject();
         return availableInteractiveObject.Count != 0;
     }
 
     public Vector3 GetInteractiveObjectPosition()
     {
-        List<GameObject> availableInteractiveObject = GetAvailableInteractiveObject();
-        return availableInteractiveObject[0].transform.position;
+        List<GameObjectWithDist> availableInteractiveObject = GetAvailableInteractiveObject();
+        availableInteractiveObject.Sort((p1,p2)=>p1.dist.CompareTo(p2.dist));
+        
+        return availableInteractiveObject[0].GameObject.transform.position;
     }
 
     void Start()
@@ -93,9 +95,9 @@ public class AiMovement : MonoBehaviour
         }
     }
 
-    private List<GameObject> GetAvailableInteractiveObject()
+    private List<GameObjectWithDist> GetAvailableInteractiveObject()
     {
-        List<GameObject> list = new List<GameObject>();
+        List<GameObjectWithDist> list = new List<GameObjectWithDist>();
         if (interactiveObjects == null)
         {
             return list;
@@ -106,10 +108,42 @@ public class AiMovement : MonoBehaviour
             ThrowableObject throwableObject = interactiveObject.GetComponent<ThrowableObject>();
             if (throwableObject != null && !throwableObject.taken)
             {
-                list.Add(interactiveObject);
+                NavMeshPath path = new NavMeshPath();
+
+                if (NavMesh.CalculatePath(transform.position, interactiveObject.transform.position, NavMesh.AllAreas,
+                    path))
+                {
+                    float pathLength = GetPathLength(path);
+                    
+                    GameObjectWithDist gameObjectWithDist = new GameObjectWithDist();
+                    gameObjectWithDist.dist = pathLength;
+                    gameObjectWithDist.GameObject = interactiveObject;
+                    list.Add(gameObjectWithDist);
+                }
             }
         }
 
         return list;
     }
+
+    public static float GetPathLength(NavMeshPath path)
+    {
+        float lng = 0.0f;
+
+        if (path.status != NavMeshPathStatus.PathInvalid)
+        {
+            for (int i = 1; i < path.corners.Length; ++i)
+            {
+                lng += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+        }
+
+        return lng;
+    }
+}
+
+class GameObjectWithDist
+{
+    public GameObject GameObject;
+    public float dist;
 }
