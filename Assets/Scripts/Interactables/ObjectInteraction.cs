@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ObjectInteraction : MonoBehaviour
-{    
+{
     private Text uiInteractiveTextBox;
     private InteractibleObjectsProvider _provider;
     private ObjectThrower _thrower;
-    
+
     private void Awake()
     {
         _provider = gameObject.GetComponent<InteractibleObjectsProvider>();
         _thrower = gameObject.GetComponent<ObjectThrower>();
-        
+
         var textObject = GameObject.FindWithTag("interactableTextBox");
         if (textObject != null)
         {
@@ -30,21 +30,25 @@ public class ObjectInteraction : MonoBehaviour
         {
             return;
         }
-        
-        if (obj.IsCanInteract())
+
+        if (obj.needUiText)
         {
-            TrySetText("Press 'E' to " + obj.interactionText);
-        }
-        else
-        {
-            TrySetText(obj.interactionText + " (unavailable)");
-        }
-        
-        if (Input.GetKeyDown(KeyCode.E) && obj.canBeActivatedWithMouse && (_thrower == null || !_thrower.IsHoldingObject()))
-        {            
             if (obj.IsCanInteract())
             {
-                obj.TryDoInteract();   
+                TrySetText("Press 'E' to " + obj.interactionText);
+            }
+            else
+            {
+                TrySetText(obj.interactionText + " (unavailable)");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && obj.canBeActivatedWithMouse &&
+            (_thrower == null || !_thrower.IsHoldingObject()))
+        {
+            if (obj.IsCanInteract())
+            {
+                obj.TryDoInteract();
             }
         }
     }

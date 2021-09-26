@@ -68,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea0b04af83acb5708ad363d0dff355b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needUiText: 0
   objectsToInteract:
   - {fileID: 1071643192793436974}
   interactionText: dverb
