@@ -9,8 +9,9 @@ public class ThrowableObject : MonoBehaviour
     [NonSerialized] public Rigidbody rb;
 
     public bool taken;
+    public bool inSocket;
     private Collider coll;
-    
+
     private void Awake()
     {
         coll = GetComponent<Collider>();
@@ -39,5 +40,4 @@ public class ThrowableObject : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Physics.IgnoreCollision(carrier, coll, false);
     }
-    
 }

@@ -8,8 +8,18 @@ public class PlayerRotationToMouse : MonoBehaviour
     [SerializeField] private float rotationStepDegrees = 30.0f;
     [SerializeField] private float offsetDegrees = 45.0f;
 
+    [SerializeField] private float rotateDegreesInStun = 0.0f;
+
+    [SerializeField] private Stuneable stuneable;
+
     void Update()
     {
+        if (stuneable != null && stuneable.IsStunned())
+        {
+            transform.rotation = Quaternion.Euler(0, rotateDegreesInStun, 0);
+            return;
+        }
+
         var mousePos = Input.mousePosition;
         var playerPos = Camera.main.WorldToScreenPoint(transform.position);
         var vec = mousePos - playerPos;
