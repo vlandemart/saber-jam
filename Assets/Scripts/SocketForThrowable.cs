@@ -29,6 +29,12 @@ public class SocketForThrowable : MonoBehaviour
             return;
         }
 
+        if (throwable.inSocket)
+        {
+            return;
+        }
+
+        throwable.inSocket = true;
         throwable.rb.isKinematic = true;
 
         throwable.rb.velocity = Vector3.zero;

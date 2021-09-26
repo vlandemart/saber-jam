@@ -49,7 +49,7 @@ public class AiObjectThrower : MonoBehaviour
 
     private void TrySetObjectAsCurrent(ThrowableObject obj)
     {
-        if (obj.taken)
+        if (obj.taken || obj.inSocket)
             return;
 
         obj.Take(gameObject.GetComponent<Collider>());
