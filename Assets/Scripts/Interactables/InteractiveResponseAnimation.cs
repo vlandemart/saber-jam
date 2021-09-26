@@ -7,7 +7,8 @@ public class InteractiveResponseAnimation : InteractiveResponse
 {
     public string doAnimationName;
     public string undoAnimationName;
-    
+    public string idleStateName = "Idle";
+
     private Animator _animator;
 
     private void Start()
@@ -28,6 +29,6 @@ public class InteractiveResponseAnimation : InteractiveResponse
 
     public override bool IsAvailable()
     {
-        return _animator.GetCurrentAnimatorStateInfo(0).IsName("layer.IDLE");
+        return _animator.GetCurrentAnimatorStateInfo(0).IsName(idleStateName);
     }
 }
