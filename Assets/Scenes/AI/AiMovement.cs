@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class AiMovement : MonoBehaviour
 {
+    public static float MAX_SPEED_FO_THROWABLE_TO_PICK = 0.3f;
+
     public Animator Animator;
 
     private NavMeshAgent _navMeshAgent;
@@ -106,7 +108,8 @@ public class AiMovement : MonoBehaviour
         foreach (var interactiveObject in interactiveObjects)
         {
             ThrowableObject throwableObject = interactiveObject.GetComponent<ThrowableObject>();
-            if (throwableObject != null && !throwableObject.taken && throwableObject.rb.velocity.magnitude < 0.5)
+            if (throwableObject != null && !throwableObject.taken &&
+                throwableObject.rb.velocity.magnitude < MAX_SPEED_FO_THROWABLE_TO_PICK)
             {
                 NavMeshPath path = new NavMeshPath();
 

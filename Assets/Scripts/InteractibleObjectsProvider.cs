@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractibleObjectsProvider : MonoBehaviour
@@ -33,6 +34,16 @@ public class InteractibleObjectsProvider : MonoBehaviour
                 continue;
             }
 
+            var kek = objectCasted as ThrowableObject;
+
+            if (kek != null)
+            {
+                if (kek.rb.velocity.magnitude > AiMovement.MAX_SPEED_FO_THROWABLE_TO_PICK)
+                {
+                    continue;
+                }
+            }
+
             if (!IsObjectRaycastable(coll.gameObject))
                 continue;
 
@@ -54,16 +65,40 @@ public class InteractibleObjectsProvider : MonoBehaviour
         var direction = objectToCheck.transform.position - transform.position;
         Ray ray = new Ray(origin, direction);
 
-        var oldLayer = gameObject.layer;
-        gameObject.layer = Physics.IgnoreRaycastLayer;
+        List<RaycastHit> hitsList = Physics.RaycastAll(ray, direction.magnitude).ToList();
 
-        if (!Physics.Raycast(ray, out var hit, direction.magnitude))
+        //
+        // for (int i = 0; i < hitsList.Count; i++)
+        // {
+        //     .distance = ;
+        // }
+        // foreach (RaycastHit hit in hitsList)
+        // {
+        //     
+        // }
+
+        hitsList.Sort((emp1, emp2) =>
         {
+            float dist1 = Vector3.Distance(ray.origin, emp1.point);
+            float dist2 = Vector3.Distance(ray.origin, emp2.point);
+            return dist1 < dist2 ? -1 : 1;
+        });
+
+        foreach (RaycastHit hit in hitsList)
+        {
+            if (hit.transform.gameObject == this.gameObject)
+            {
+                continue;
+            }
+
+            if (hit.transform.gameObject == objectToCheck)
+            {
+                return true;
+            }
+
             return false;
         }
 
-        gameObject.layer = oldLayer;
-
-        return hit.transform.gameObject == objectToCheck;
+        return false;
     }
 }
