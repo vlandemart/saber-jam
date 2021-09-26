@@ -8,10 +8,10 @@ using UnityEngine.SceneManagement;
 public class Domain : MonoBehaviour
 {
     public UnityEvent OnPlayerEnter;
+    public UnityEvent OnGameEnd;
     public bool drawInGame = false;
 
-    // [SerializeField] private bool loadNextLevel;
-    [SerializeField] private float loadNextLevelDelay = 3.0f;
+    private bool isTransitioningToNextLevel = false;
 
     private void Start()
     {
@@ -25,22 +25,25 @@ public class Domain : MonoBehaviour
         {
             OnPlayerEnter.Invoke();
 
-            StartCoroutine(Corouteen());
+            isTransitioningToNextLevel = true;
         }
     }
 
-    IEnumerator Corouteen()
+    private void Update()
     {
-        yield return new WaitForSeconds(loadNextLevelDelay);
-        int buildIndex = SceneManager.GetActiveScene().buildIndex;
-        buildIndex++;
-
-        if (buildIndex >= SceneManager.sceneCountInBuildSettings)
+        if (isTransitioningToNextLevel && Input.GetKeyDown(KeyCode.E))
         {
-            // ETO FINAL!!!!
-            yield break;
-        }
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+            buildIndex++;
 
-        SceneManager.LoadScene(buildIndex);
+            if (buildIndex >= SceneManager.sceneCountInBuildSettings)
+            {
+                // ETO FINAL!!!!
+                OnGameEnd.Invoke();
+                return;
+            }
+
+            SceneManager.LoadScene(buildIndex);
+        }
     }
 }
