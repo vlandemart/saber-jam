@@ -21,6 +21,16 @@ public class SocketForThrowable : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+    	if (done)
+        {
+            return;
+        }
+
+        if (throwableTransform)
+        {
+            return;
+        }
+
         var throwable = other.GetComponent<ThrowableObject>();
         if (throwable == null)
         {
