@@ -16,6 +16,8 @@ public class SocketForThrowable : MonoBehaviour
 
     private bool done = false;
 
+    public GameObject VFX;
+
     private void OnTriggerEnter(Collider other)
     {
         var throwable = other.GetComponent<ThrowableObject>();
@@ -69,6 +71,7 @@ public class SocketForThrowable : MonoBehaviour
             }
 
             Debug.Log("Do interaction with " + gameObject.name);
+            Instantiate(VFX, transform.position, Quaternion.identity);
         }
 
         timeCur += Time.deltaTime;

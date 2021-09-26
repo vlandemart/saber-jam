@@ -87,7 +87,8 @@ public class ObjectThrower : MonoBehaviour
         _currentThrowable = obj;
 
         _currentThrowable.transform.parent = throwableObjectAttachTransform;
-        _currentThrowable.transform.localPosition = Vector3.zero;
+        _currentThrowable.transform.position = throwableObjectAttachTransform.position;
+        _currentThrowable.transform.rotation = throwableObjectAttachTransform.rotation;
 
         targetPositionMarker.SetActive(true);
     }
